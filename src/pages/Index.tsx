@@ -1,12 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navbar from "@/components/Navbar";
+import CryptoTicker from "@/components/CryptoTicker";
+import HighlightBanner from "@/components/HighlightBanner";
+import PerformanceChart from "@/components/PerformanceChart";
+import InfoPanel from "@/components/InfoPanel";
+import ModelLeaderboard from "@/components/ModelLeaderboard";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      
+      <main className="pt-20">
+        <CryptoTicker />
+        <HighlightBanner />
+        
+        <div className="container mx-auto px-6 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <PerformanceChart />
+              <div className="mt-8">
+                <ModelLeaderboard />
+              </div>
+            </div>
+            
+            <div className="lg:col-span-1">
+              <InfoPanel />
+            </div>
+          </div>
+        </div>
+
+        <footer className="text-center py-8 text-sm text-muted-foreground border-t border-border mt-12">
+          <p>nof1.ai</p>
+        </footer>
+      </main>
     </div>
   );
 };
