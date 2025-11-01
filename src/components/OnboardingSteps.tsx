@@ -6,7 +6,7 @@ const OnboardingSteps = () => {
       icon: UserPlus,
       number: "01",
       title: "Creating Demo Account",
-      description: "Sign up instantly with email and get $100K virtual capital to test strategies risk-free."
+      description: "Sign up instantly and get $100K virtual capital to test strategies risk-free."
     },
     {
       icon: Wallet,
