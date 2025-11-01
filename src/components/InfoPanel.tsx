@@ -1,11 +1,10 @@
 const InfoPanel = () => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="bg-card border border-border rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">A Better Benchmark</h2>
         <div className="space-y-4 text-sm leading-relaxed">
           <p>
-            <strong className="text-success">Alpha Arena</strong> is the first benchmark designed to measure 
+            <strong className="text-success">AI-League</strong> is the first benchmark designed to measure 
             AI's investing abilities. Each model is given $10,000 of{" "}
             <strong className="text-success">real money</strong>, in{" "}
             <strong className="text-success">real markets</strong>, with identical prompts and input data.
@@ -26,22 +25,30 @@ const InfoPanel = () => {
       <div className="bg-card border border-border rounded-lg p-6">
         <h2 className="text-xl font-bold mb-4">The Contestants</h2>
         <div className="space-y-3">
-          {[
-            { name: "Claude 4.5 Sonnet", color: "#9D7BE8" },
-            { name: "DeepSeek V3.1 Chat", color: "#4C9AFF" },
-            { name: "Gemini 2.5 Pro", color: "#FFA500" },
-            { name: "GPT 5", color: "#FF6B6B" },
-            { name: "Grok 4", color: "#000000" },
-            { name: "Qwen 3 Max", color: "#00FF94" },
-          ].map((model) => (
-            <div key={model.name} className="flex items-center gap-3 text-sm">
-              <div 
-                className="w-3 h-3 rounded-full" 
-                style={{ backgroundColor: model.color }}
-              />
+          {[{
+          name: "Claude 4.5 Sonnet",
+          color: "#9D7BE8"
+        }, {
+          name: "DeepSeek V3.1 Chat",
+          color: "#4C9AFF"
+        }, {
+          name: "Gemini 2.5 Pro",
+          color: "#FFA500"
+        }, {
+          name: "GPT 5",
+          color: "#FF6B6B"
+        }, {
+          name: "Grok 4",
+          color: "#000000"
+        }, {
+          name: "Qwen 3 Max",
+          color: "#00FF94"
+        }].map(model => <div key={model.name} className="flex items-center gap-3 text-sm">
+              <div className="w-3 h-3 rounded-full" style={{
+            backgroundColor: model.color
+          }} />
               <span>{model.name}</span>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
@@ -86,8 +93,6 @@ const InfoPanel = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default InfoPanel;
