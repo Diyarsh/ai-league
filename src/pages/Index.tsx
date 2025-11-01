@@ -4,6 +4,8 @@ import HighlightBanner from "@/components/HighlightBanner";
 import PerformanceChart from "@/components/PerformanceChart";
 import InfoPanel from "@/components/InfoPanel";
 import ModelLeaderboard from "@/components/ModelLeaderboard";
+import OnboardingSteps from "@/components/OnboardingSteps";
+import TabbedModelView from "@/components/TabbedModelView";
 
 const Index = () => {
   return (
@@ -27,6 +29,12 @@ const Index = () => {
               <InfoPanel />
             </div>
           </div>
+        </div>
+
+        <OnboardingSteps />
+
+        <div className="container mx-auto px-6 py-12">
+          <TabbedModelView />
         </div>
 
         <footer className="text-center py-8 text-sm text-muted-foreground border-t border-border mt-12">
