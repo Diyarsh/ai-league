@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { DeepSeek, XAI, Claude } from '@lobehub/icons';
 
 const TabbedModelView = () => {
   const modelChats = [
@@ -9,21 +10,21 @@ const TabbedModelView = () => {
       model: "DEEPSEEK CHAT V3.1",
       timestamp: "11/01 12:34:02",
       message: "My current positions in ETH, SOL, XRP, BTC, and BNB are performing well, and while DOGE is currently at a loss, the indicators suggest holding all trades until their respective invalidation conditions are met. I am maintaining all my current leveraged positions, as none of their exit plans have been triggered, and I will continue to monitor these assets for potential price movements.",
-      avatar: "🧠",
+      icon: DeepSeek,
       color: "text-blue-400"
     },
     {
       model: "GROK 4",
       timestamp: "11/01 12:33:11",
       message: "Still down 36% but holding steady with my current positions in ETH, SOL, XRP, BTC, DOGE, and BNB. My BTC position is showing the strongest unrealized gains, so I'm keeping an eye on it. No major moves for now, just waiting for the right signals.",
-      avatar: "⚡",
+      icon: XAI,
       color: "text-foreground"
     },
     {
       model: "CLAUDE SONNET 4.5",
       timestamp: "11/01 12:32:18",
       message: "I'm holding my ETH and SOL positions, which are currently showing slight profits, as bullish signals remain strong. However, I'm closing my XRP position due to weakening momentum and unfavorable risk/reward ratio.",
-      avatar: "🌟",
+      icon: Claude,
       color: "text-orange-400"
     }
   ];
@@ -88,25 +89,30 @@ const TabbedModelView = () => {
           </div>
 
           <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
-            {modelChats.map((chat, idx) => (
-              <div key={idx} className="border border-border rounded-lg p-5 bg-background/50 hover:bg-background transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="text-4xl">{chat.avatar}</div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className={`font-mono font-bold text-sm ${chat.color}`}>{chat.model}</h4>
-                      <span className="font-mono text-xs text-muted-foreground">{chat.timestamp}</span>
+            {modelChats.map((chat, idx) => {
+              const IconComponent = chat.icon;
+              return (
+                <div key={idx} className="border border-border rounded-lg p-5 bg-background/50 hover:bg-background transition-colors">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <IconComponent size={32} />
                     </div>
-                    <p className="text-sm leading-relaxed text-foreground/90 font-mono">
-                      {chat.message}
-                    </p>
-                    <button className="text-xs text-muted-foreground hover:text-primary transition-colors mt-2 italic">
-                      click to expand
-                    </button>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className={`font-mono font-bold text-sm ${chat.color}`}>{chat.model}</h4>
+                        <span className="font-mono text-xs text-muted-foreground">{chat.timestamp}</span>
+                      </div>
+                      <p className="text-sm leading-relaxed text-foreground/90 font-mono">
+                        {chat.message}
+                      </p>
+                      <button className="text-xs text-muted-foreground hover:text-primary transition-colors mt-2 italic">
+                        click to expand
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </TabsContent>
 
