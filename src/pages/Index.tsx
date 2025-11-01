@@ -11,12 +11,12 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main className="pt-20">
+      <main className="pt-16 sm:pt-20">
         <CryptoTicker />
         <HighlightBanner />
         
-        <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 gap-8">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8">
             <PerformanceChart />
             <ModelLeaderboard />
           </div>
@@ -24,11 +24,11 @@ const Index = () => {
 
         <OnboardingSteps />
 
-        <div className="container mx-auto px-6 py-12">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <TabbedModelView />
         </div>
 
-        <footer className="text-center py-8 text-sm text-muted-foreground border-t border-border mt-12">
+        <footer className="text-center py-6 sm:py-8 text-xs sm:text-sm text-muted-foreground border-t border-border mt-8 sm:mt-12">
           <p>ai-league.ai</p>
         </footer>
       </main>

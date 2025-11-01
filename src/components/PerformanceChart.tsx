@@ -90,44 +90,44 @@ const PerformanceChart = () => {
     const hours = range === '72h' ? 72 : 300;
     setChartData(generateChartData(hours));
   };
-  return <div className="w-full h-[600px] bg-card border border-border rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">TOTAL ACCOUNT VALUE</h2>
+  return <div className="w-full h-[400px] sm:h-[500px] lg:h-[600px] bg-card border border-border rounded-lg p-3 sm:p-4 lg:p-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+        <h2 className="text-base sm:text-lg lg:text-xl font-bold">TOTAL ACCOUNT VALUE</h2>
         <div className="flex gap-2">
-          <button onClick={() => handleTimeRangeChange('all')} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${timeRange === 'all' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
+          <button onClick={() => handleTimeRangeChange('all')} className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors ${timeRange === 'all' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
             ALL
           </button>
-          <button onClick={() => handleTimeRangeChange('72h')} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${timeRange === '72h' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
+          <button onClick={() => handleTimeRangeChange('72h')} className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded text-xs sm:text-sm font-medium transition-colors ${timeRange === '72h' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
             72H
           </button>
         </div>
       </div>
       
       <ResponsiveContainer width="100%" height="90%">
-        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" tick={{
-          fontSize: 11,
+          fontSize: 9,
           fill: 'hsl(var(--muted-foreground))'
-        }} />
+        }} interval="preserveStartEnd" />
           <YAxis stroke="hsl(var(--muted-foreground))" tick={{
-          fontSize: 11,
+          fontSize: 9,
           fill: 'hsl(var(--muted-foreground))'
         }} tickFormatter={value => `$${(value / 1000).toFixed(0)}k`} />
           <Tooltip contentStyle={{
           backgroundColor: 'hsl(var(--card))',
           border: '1px solid hsl(var(--border))',
           borderRadius: '6px',
-          fontSize: '12px'
+          fontSize: '11px'
         }} formatter={(value: any) => [`$${value.toLocaleString('en-US', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         })}`, '']} />
           <Legend wrapperStyle={{
-          fontSize: '12px'
+          fontSize: '10px'
         }} />
           {models.map(model => <Line key={model.name} type="monotone" dataKey={model.name} stroke={model.color} strokeWidth={2} dot={<CustomDot data={chartData} />} activeDot={{
-          r: 6
+          r: 4
         }} animationDuration={300} />)}
         </LineChart>
       </ResponsiveContainer>

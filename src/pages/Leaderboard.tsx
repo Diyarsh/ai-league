@@ -112,20 +112,20 @@ const Leaderboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="pt-32 container mx-auto px-6 pb-12">
-        <h1 className="text-5xl font-bold mb-8 uppercase">Leaderboard</h1>
+      <main className="pt-24 sm:pt-32 container mx-auto px-4 sm:px-6 pb-8 sm:pb-12">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 uppercase">Leaderboard</h1>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="bg-transparent border-0 gap-0 p-0 h-auto mb-8">
+          <TabsList className="bg-transparent border-0 gap-0 p-0 h-auto mb-6 sm:mb-8 w-full sm:w-auto">
             <TabsTrigger 
               value="overall" 
-              className="bg-foreground text-background data-[state=inactive]:bg-transparent data-[state=inactive]:text-foreground data-[state=inactive]:border data-[state=inactive]:border-border px-6 py-3 rounded-none uppercase font-bold text-sm"
+              className="bg-foreground text-background data-[state=inactive]:bg-transparent data-[state=inactive]:text-foreground data-[state=inactive]:border data-[state=inactive]:border-border px-3 sm:px-6 py-2 sm:py-3 rounded-none uppercase font-bold text-xs sm:text-sm flex-1 sm:flex-none"
             >
               Overall Stats
             </TabsTrigger>
             <TabsTrigger 
               value="advanced" 
-              className="bg-foreground text-background data-[state=inactive]:bg-transparent data-[state=inactive]:text-foreground data-[state=inactive]:border data-[state=inactive]:border-border px-6 py-3 rounded-none uppercase font-bold text-sm"
+              className="bg-foreground text-background data-[state=inactive]:bg-transparent data-[state=inactive]:text-foreground data-[state=inactive]:border data-[state=inactive]:border-border px-3 sm:px-6 py-2 sm:py-3 rounded-none uppercase font-bold text-xs sm:text-sm flex-1 sm:flex-none"
             >
               Advanced Analytics
             </TabsTrigger>
@@ -183,9 +183,9 @@ const Leaderboard = () => {
             </div>
 
             {/* Bottom Section: Winning Model Card + Chart */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Winning Model Card */}
-              <div className="bg-card border-2 border-border p-8">
+              <div className="bg-card border-2 border-border p-4 sm:p-6 lg:p-8">
                 <h3 className="font-mono font-bold text-lg mb-6 uppercase">Winning Model</h3>
                 <div className="flex items-center gap-3 mb-8">
                   <WinningIcon size={32} />
@@ -216,8 +216,8 @@ const Leaderboard = () => {
               </div>
 
               {/* Bar Chart */}
-              <div className="lg:col-span-2 bg-card border-2 border-border p-8">
-                <ResponsiveContainer width="100%" height={300}>
+              <div className="lg:col-span-2 bg-card border-2 border-border p-4 sm:p-6 lg:p-8">
+                <ResponsiveContainer width="100%" height={250}>
                   <BarChart data={chartData}>
                     <XAxis 
                       dataKey="name" 

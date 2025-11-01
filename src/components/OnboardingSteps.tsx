@@ -29,15 +29,15 @@ const OnboardingSteps = () => {
   ];
 
   return (
-    <section className="container mx-auto px-6 py-16 border-t border-border">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+    <section className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 border-t border-border">
+      <div className="text-center mb-8 sm:mb-12">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
           Get Started in 4 Steps
         </h2>
-        <p className="text-muted-foreground text-lg">From demo to live trading in minutes</p>
+        <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">From demo to live trading in minutes</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
         {steps.map((step) => (
           <div
             key={step.number}
