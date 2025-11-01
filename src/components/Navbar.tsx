@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useOnboarding } from "@/contexts/OnboardingContext";
 import logo from "@/assets/AI-League-logo.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { startDemo } = useOnboarding();
 
   return <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
       <div className="container mx-auto px-4 sm:px-6 py-4">
@@ -25,22 +28,14 @@ const Navbar = () => {
             <Link to="/leaderboard" className="text-sm font-medium hover:text-primary transition-colors">
               LEADERBOARD
             </Link>
-            <Link to="/blog" className="text-sm font-medium hover:text-primary transition-colors">
-              BLOG
-            </Link>
-            <Link to="/models" className="text-sm font-medium hover:text-primary transition-colors">
-              MODELS
-            </Link>
+            <Button 
+              onClick={startDemo}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Demo
+            </Button>
           </div>
 
-          <div className="hidden xl:flex items-center gap-4">
-            <a href="#" className="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap">
-              JOIN THE PLATFORM WAITLIST →
-            </a>
-            <a href="#" className="text-sm font-medium hover:text-primary transition-colors whitespace-nowrap">
-              ABOUT AI-LEAGUE →
-            </a>
-          </div>
 
           {/* Mobile Menu Button */}
           <button 
@@ -69,26 +64,15 @@ const Navbar = () => {
             >
               LEADERBOARD
             </Link>
-            <Link 
-              to="/blog" 
-              className="block text-sm font-medium hover:text-primary transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            <Button 
+              onClick={() => {
+                startDemo();
+                setIsMenuOpen(false);
+              }}
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
             >
-              BLOG
-            </Link>
-            <Link 
-              to="/models" 
-              className="block text-sm font-medium hover:text-primary transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              MODELS
-            </Link>
-            <a href="#" className="block text-sm font-medium hover:text-primary transition-colors py-2">
-              JOIN THE PLATFORM WAITLIST →
-            </a>
-            <a href="#" className="block text-sm font-medium hover:text-primary transition-colors py-2">
-              ABOUT AI-LEAGUE →
-            </a>
+              Demo
+            </Button>
           </div>
         )}
       </div>

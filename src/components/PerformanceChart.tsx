@@ -1,31 +1,49 @@
 import { useState, useEffect } from "react";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { DeepSeek, Claude, OpenAI, Gemini, XAI } from '@lobehub/icons';
+import { DeepSeek, Claude, OpenAI, Gemini, XAI, Qwen } from '@lobehub/icons';
+import { Bitcoin } from 'lucide-react';
 const models = [{
   name: 'DeepSeek V3.1',
   color: '#4C9AFF',
   volatility: 0.015,
-  icon: DeepSeek
+  icon: DeepSeek,
+  isDashed: false
 }, {
   name: 'Claude 4.5',
   color: '#9D7BE8',
   volatility: 0.012,
-  icon: Claude
+  icon: Claude,
+  isDashed: false
 }, {
   name: 'GPT 5',
   color: '#FF6B6B',
   volatility: 0.018,
-  icon: OpenAI
+  icon: OpenAI,
+  isDashed: false
 }, {
   name: 'Gemini 2.5 Pro',
   color: '#FFA500',
   volatility: 0.010,
-  icon: Gemini
+  icon: Gemini,
+  isDashed: false
 }, {
   name: 'Grok 4',
-  color: '#000000',
+  color: '#FFFFFF',
   volatility: 0.020,
-  icon: XAI
+  icon: XAI,
+  isDashed: false
+}, {
+  name: 'Qwen 3 Max',
+  color: '#00FF94',
+  volatility: 0.014,
+  icon: Qwen,
+  isDashed: false
+}, {
+  name: 'Bitcoin',
+  color: '#808080',
+  volatility: 0.005,
+  icon: Bitcoin,
+  isDashed: true
 }];
 const generateChartData = (hours: number, isLive: boolean = false) => {
   const data = [];
@@ -47,15 +65,72 @@ const generateChartData = (hours: number, isLive: boolean = false) => {
       })
     };
     models.forEach((model, idx) => {
-      const baseValue = 10000 + idx * 500;
-      const trend = i * (idx % 2 === 0 ? 50 : -30);
-      const noise = (Math.random() - 0.5) * baseValue * model.volatility;
-      point[model.name] = Math.max(5000, baseValue + trend + noise);
+      const baseValue = 100; // Все модели стартуют с $100
+      
+      // Получаем предыдущее значение для более естественного движения
+      let previousValue = baseValue;
+      if (i > 0 && data.length > 0) {
+        previousValue = data[i - 1][model.name] || baseValue;
+      }
+      
+      // Увеличиваем волатильность для эффекта скачущих линий
+      const trend = model.name === 'Bitcoin' ? 0 : (i * (idx % 2 === 0 ? 0.5 : -0.3));
+      const volatilityMultiplier = 10; // Увеличиваем для более заметных колебаний
+      const noise = (Math.random() - 0.5) * baseValue * model.volatility * volatilityMultiplier;
+      
+      // Добавляем случайные скачки для эффекта трейдинга
+      const randomJump = (Math.random() - 0.5) * 15;
+      
+      // Новое значение на основе предыдущего + изменения
+      const change = noise * 0.5 + randomJump * 0.4 + (i === 0 ? 0 : trend / dataPoints);
+      point[model.name] = Math.max(0, Math.min(250, previousValue + change));
     });
     data.push(point);
   }
   return data;
 };
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload || !payload.length) {
+    return null;
+  }
+
+  return (
+    <div className="bg-card border border-border rounded-lg p-3 shadow-lg">
+      <div className="text-sm font-semibold text-foreground mb-2">{label}</div>
+      <div className="space-y-1.5">
+        {payload.map((entry: any, index: number) => {
+          const model = models.find(m => m.name === entry.dataKey);
+          if (!model) return null;
+          const IconComponent = model.icon;
+          
+          return (
+            <div key={index} className="flex items-center gap-2">
+              <div 
+                className="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+                style={{ borderColor: model.color }}
+              >
+                <IconComponent size={14} color={model.color === '#FFFFFF' ? '#fff' : model.color} />
+              </div>
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <span className="text-xs text-muted-foreground truncate">{model.name}</span>
+                <span 
+                  className="text-xs font-mono font-semibold ml-auto"
+                  style={{ color: model.color }}
+                >
+                  ${entry.value?.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const CustomDot = (props: any) => {
   const {
     cx,
@@ -71,12 +146,16 @@ const CustomDot = (props: any) => {
   const model = models.find(m => m.name === dataKey);
   if (!model) return null;
   const IconComponent = model.icon;
+  const logoSize = 32;
+  const logoOffset = logoSize / 2;
   return <g>
-      <foreignObject x={cx - 12} y={cy - 12} width={24} height={24}>
-        <div className="w-6 h-6 rounded-full bg-background border-2 flex items-center justify-center shadow-lg" style={{
-        borderColor: model.color
+      <foreignObject x={cx - logoOffset} y={cy - logoOffset} width={logoSize} height={logoSize}>
+        <div className="rounded-full bg-background border-2 flex items-center justify-center shadow-lg" style={{
+        borderColor: model.color,
+        width: `${logoSize}px`,
+        height: `${logoSize}px`
       }}>
-          <IconComponent size={14} />
+          <IconComponent size={20} color={model.color === '#FFFFFF' ? '#fff' : model.color} />
         </div>
       </foreignObject>
     </g>;
@@ -104,29 +183,27 @@ const PerformanceChart = () => {
       </div>
       
       <ResponsiveContainer width="100%" height="90%">
-        <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 50, left: -20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" tick={{
           fontSize: 9,
           fill: 'hsl(var(--muted-foreground))'
         }} interval="preserveStartEnd" />
-          <YAxis stroke="hsl(var(--muted-foreground))" tick={{
-          fontSize: 9,
-          fill: 'hsl(var(--muted-foreground))'
-        }} tickFormatter={value => `$${(value / 1000).toFixed(0)}k`} />
-          <Tooltip contentStyle={{
-          backgroundColor: 'hsl(var(--card))',
-          border: '1px solid hsl(var(--border))',
-          borderRadius: '6px',
-          fontSize: '11px'
-        }} formatter={(value: any) => [`$${value.toLocaleString('en-US', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })}`, '']} />
+          <YAxis 
+            domain={[0, 250]}
+            stroke="hsl(var(--muted-foreground))" 
+            tick={{
+              fontSize: 9,
+              fill: 'hsl(var(--muted-foreground))'
+            }}
+            ticks={[0, 50, 100, 150, 200, 250]}
+            tickFormatter={value => `$${value.toFixed(0)}`} 
+          />
+          <Tooltip content={<CustomTooltip />} />
           <Legend wrapperStyle={{
           fontSize: '10px'
         }} />
-          {models.map(model => <Line key={model.name} type="monotone" dataKey={model.name} stroke={model.color} strokeWidth={2} dot={<CustomDot data={chartData} />} activeDot={{
+          {models.map(model => <Line key={model.name} type="linear" dataKey={model.name} stroke={model.color} strokeWidth={model.isDashed ? 1.5 : 2} strokeDasharray={model.isDashed ? '5 5' : '0'} dot={<CustomDot data={chartData} />} activeDot={{
           r: 4
         }} animationDuration={300} />)}
         </LineChart>
