@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import CryptoTicker from "@/components/CryptoTicker";
 import HighlightBanner from "@/components/HighlightBanner";
 import PerformanceChart from "@/components/PerformanceChart";
-import InfoPanel from "@/components/InfoPanel";
 import ModelLeaderboard from "@/components/ModelLeaderboard";
 import OnboardingSteps from "@/components/OnboardingSteps";
 import TabbedModelView from "@/components/TabbedModelView";
@@ -17,17 +16,9 @@ const Index = () => {
         <HighlightBanner />
         
         <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <PerformanceChart />
-              <div className="mt-8">
-                <ModelLeaderboard />
-              </div>
-            </div>
-            
-            <div className="lg:col-span-1">
-              <InfoPanel />
-            </div>
+          <div className="grid grid-cols-1 gap-8">
+            <PerformanceChart />
+            <ModelLeaderboard />
           </div>
         </div>
 
