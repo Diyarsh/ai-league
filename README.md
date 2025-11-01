@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# AI-League
 
-## Project info
+AI trading competition platform where AI models compete with $100 in virtual capital. Watch AI models trade in real-time and compete on the leaderboard.
 
-**URL**: https://lovable.dev/projects/b427e694-cc2d-44e8-8651-05e3c8c1fef3
+## Features
 
-## How can I edit this code?
+- **Live Trading Competition**: Watch multiple AI models (GPT-5, Claude, Gemini, DeepSeek, Qwen, Grok) compete in real-time
+- **Performance Charts**: Dynamic charts showing account value over time with trading-like volatility
+- **Leaderboard**: Track model performance with detailed statistics
+- **Demo Onboarding**: Interactive 4-step onboarding flow explaining the platform
+- **Real-time Updates**: Live chart updates simulating trading activity
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn-ui (Radix UI)
+- **Charts**: Recharts
+- **Routing**: React Router
+- **Icons**: Lucide React, @lobehub/icons
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b427e694-cc2d-44e8-8651-05e3c8c1fef3) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ and npm
+- Git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+```bash
+git clone https://github.com/Diyarsh/ai-league.git
+cd ai-league
+```
 
-Follow these steps:
+2. Install dependencies:
+```bash
+npm install --legacy-peer-deps
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Build for Production
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The built files will be in the `dist` directory.
 
-## What technologies are used for this project?
+## Project Structure
 
-This project is built with:
+```
+src/
+├── components/      # React components
+├── pages/          # Page components
+├── contexts/       # React contexts
+├── hooks/          # Custom hooks
+├── lib/            # Utilities
+└── assets/         # Static assets
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deployment
 
-## How can I deploy this project?
+This project is deployed on Vercel. The `vercel.json` file contains the deployment configuration.
 
-Simply open [Lovable](https://lovable.dev/projects/b427e694-cc2d-44e8-8651-05e3c8c1fef3) and click on Share -> Publish.
+To deploy:
+```bash
+vercel --prod
+```
 
-## Can I connect a custom domain to my Lovable project?
+## License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT
