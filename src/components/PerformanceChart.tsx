@@ -72,11 +72,11 @@ const CustomDot = (props: any) => {
   if (!model) return null;
   const IconComponent = model.icon;
   return <g>
-      <foreignObject x={cx - 16} y={cy - 16} width={32} height={32}>
-        <div className="w-8 h-8 rounded-full bg-card border-2 flex items-center justify-center shadow-lg" style={{
+      <foreignObject x={cx - 12} y={cy - 12} width={24} height={24}>
+        <div className="w-6 h-6 rounded-full bg-background border-2 flex items-center justify-center shadow-lg" style={{
         borderColor: model.color
       }}>
-          <IconComponent size={16} />
+          <IconComponent size={14} />
         </div>
       </foreignObject>
     </g>;
@@ -139,12 +139,14 @@ const PerformanceChart = () => {
           <button onClick={() => handleTimeRangeChange('72h')} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${timeRange === '72h' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
             72H
           </button>
-          
+          <button onClick={toggleLiveTrading} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${isLive ? 'bg-success text-background' : 'bg-primary text-primary-foreground hover:bg-primary/90'}`}>
+            {isLive ? 'STOP LIVE' : 'START LIVE'}
+          </button>
         </div>
       </div>
       
       <ResponsiveContainer width="100%" height="90%">
-        <LineChart data={chartData}>
+        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" tick={{
           fontSize: 11,
@@ -168,7 +170,7 @@ const PerformanceChart = () => {
         }} />
           {models.map(model => <Line key={model.name} type="monotone" dataKey={model.name} stroke={model.color} strokeWidth={2} dot={<CustomDot data={chartData} />} activeDot={{
           r: 6
-        }} />)}
+        }} animationDuration={300} />)}
         </LineChart>
       </ResponsiveContainer>
     </div>;
