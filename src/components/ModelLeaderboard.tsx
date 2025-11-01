@@ -15,7 +15,19 @@ const ModelLeaderboard = () => {
   const sortedModels = [...models].sort((a, b) => b.value - a.value);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">LEADERBOARD</h2>
+        <a 
+          href="https://nof1.ai/leaderboard" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-sm text-primary hover:text-primary/80 underline transition-colors"
+        >
+          View Full Leaderboard →
+        </a>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {sortedModels.map((model) => {
         const IconComponent = model.icon;
         return (
@@ -39,6 +51,7 @@ const ModelLeaderboard = () => {
           </div>
         );
       })}
+      </div>
     </div>
   );
 };

@@ -84,63 +84,21 @@ const CustomDot = (props: any) => {
 const PerformanceChart = () => {
   const [timeRange, setTimeRange] = useState<'all' | '72h'>('all');
   const [chartData, setChartData] = useState(generateChartData(300));
-  const [isLive, setIsLive] = useState(false);
-  useEffect(() => {
-    if (!isLive) return;
-    const interval = setInterval(() => {
-      setChartData(prevData => {
-        const newData = [...prevData];
-        const lastPoint = newData[newData.length - 1];
-        const date = new Date();
-        const newPoint: any = {
-          date: date.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit'
-          })
-        };
-        models.forEach(model => {
-          const lastValue = lastPoint[model.name];
-          const noise = (Math.random() - 0.5) * lastValue * model.volatility * 2;
-          newPoint[model.name] = Math.max(5000, lastValue + noise);
-        });
 
-        // Keep last 100 points for 'all', last 72 for '72h'
-        const maxPoints = timeRange === '72h' ? 72 : 100;
-        const updatedData = [...newData.slice(-(maxPoints - 1)), newPoint];
-        return updatedData;
-      });
-    }, 3000); // Update every 3 seconds
-
-    return () => clearInterval(interval);
-  }, [isLive, timeRange]);
   const handleTimeRangeChange = (range: 'all' | '72h') => {
     setTimeRange(range);
-    setIsLive(false);
     const hours = range === '72h' ? 72 : 300;
     setChartData(generateChartData(hours));
   };
-  const toggleLiveTrading = () => {
-    setIsLive(!isLive);
-  };
   return <div className="w-full h-[600px] bg-card border border-border rounded-lg p-6">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <h2 className="text-xl font-bold">TOTAL ACCOUNT VALUE</h2>
-          {isLive && <div className="flex items-center gap-2 px-3 py-1 bg-success/10 rounded-full border border-success/20">
-              <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span className="text-xs font-mono font-bold text-success">LIVE</span>
-            </div>}
-        </div>
+        <h2 className="text-xl font-bold">TOTAL ACCOUNT VALUE</h2>
         <div className="flex gap-2">
           <button onClick={() => handleTimeRangeChange('all')} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${timeRange === 'all' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
             ALL
           </button>
           <button onClick={() => handleTimeRangeChange('72h')} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${timeRange === '72h' ? 'bg-foreground text-background' : 'bg-secondary text-foreground hover:bg-secondary/80'}`}>
             72H
-          </button>
-          <button onClick={toggleLiveTrading} className={`px-4 py-2 rounded text-sm font-medium transition-colors ${isLive ? 'bg-success text-background' : 'bg-primary text-primary-foreground hover:bg-primary/90'}`}>
-            {isLive ? 'STOP LIVE' : 'START LIVE'}
           </button>
         </div>
       </div>
