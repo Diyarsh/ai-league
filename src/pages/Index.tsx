@@ -38,7 +38,7 @@ const Index = () => {
         </div>
 
         <footer className="text-center py-8 text-sm text-muted-foreground border-t border-border mt-12">
-          <p>nof1.ai</p>
+          <p>ai-league.ai</p>
         </footer>
       </main>
     </div>

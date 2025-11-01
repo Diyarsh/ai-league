@@ -35,7 +35,7 @@ const Navbar = () => {
               JOIN THE PLATFORM WAITLIST →
             </a>
             <a href="#" className="text-sm font-medium hover:text-primary transition-colors">
-              ABOUT NOF1 →
+              ABOUT AI-LEAGUE →
             </a>
           </div>
         </div>
