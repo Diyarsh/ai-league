@@ -29,7 +29,7 @@ const Index = () => {
         </div>
 
         <footer className="text-center py-6 sm:py-8 text-xs sm:text-sm text-muted-foreground border-t border-border mt-8 sm:mt-12">
-          <p>ai-league.ai</p>
+          <p>ai-league.net</p>
         </footer>
       </main>
     </div>
