@@ -4,25 +4,25 @@ import { DeepSeek, Claude, OpenAI, Gemini, XAI, Qwen } from '@lobehub/icons';
 import { Bitcoin } from 'lucide-react';
 const models = [{
   name: 'DeepSeek V3.1',
-  color: '#4C9AFF',
+  color: '#4A90E2',
   volatility: 0.015,
   icon: DeepSeek,
   isDashed: false
 }, {
   name: 'Claude 4.5',
-  color: '#9D7BE8',
+  color: '#FF6B35',
   volatility: 0.012,
   icon: Claude,
   isDashed: false
 }, {
   name: 'GPT 5',
-  color: '#FF6B6B',
+  color: '#00D9A5',
   volatility: 0.018,
   icon: OpenAI,
   isDashed: false
 }, {
   name: 'Gemini 2.5 Pro',
-  color: '#FFA500',
+  color: '#4285F4',
   volatility: 0.010,
   icon: Gemini,
   isDashed: false
@@ -40,7 +40,7 @@ const models = [{
   isDashed: false
 }, {
   name: 'Bitcoin',
-  color: '#808080',
+  color: '#F7931A',
   volatility: 0.005,
   icon: Bitcoin,
   isDashed: true
@@ -163,11 +163,31 @@ const CustomDot = (props: any) => {
 const PerformanceChart = () => {
   const [timeRange, setTimeRange] = useState<'all' | '72h'>('all');
   const [chartData, setChartData] = useState(generateChartData(300));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleTimeRangeChange = (range: 'all' | '72h') => {
     setTimeRange(range);
     const hours = range === '72h' ? 72 : 300;
     setChartData(generateChartData(hours));
+  };
+
+  const formatLegendName = (value: string) => {
+    if (isMobile) {
+      if (value === 'DeepSeek V3.1') return 'DeepSeek';
+      if (value === 'Gemini 2.5 Pro') return 'Gemini';
+      if (value === 'Qwen 3 Max') return 'Qwen';
+      if (value === 'Claude 4.5') return 'Claude';
+    }
+    return value;
   };
   return <div className="w-full h-[400px] sm:h-[500px] lg:h-[600px] bg-card border border-border rounded-lg p-3 sm:p-4 lg:p-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
@@ -183,7 +203,7 @@ const PerformanceChart = () => {
       </div>
       
       <ResponsiveContainer width="100%" height="90%">
-        <LineChart data={chartData} margin={{ top: 5, right: 50, left: -20, bottom: 5 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 50, left: -20, bottom: isMobile ? 50 : 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" tick={{
           fontSize: 9,
@@ -200,9 +220,13 @@ const PerformanceChart = () => {
             tickFormatter={value => `$${value.toFixed(0)}`} 
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend wrapperStyle={{
-          fontSize: '10px'
-        }} />
+          <Legend 
+            wrapperStyle={{
+              fontSize: isMobile ? '8px' : '10px'
+            }}
+            iconSize={isMobile ? 7 : 10}
+            formatter={formatLegendName}
+          />
           {models.map(model => <Line key={model.name} type="linear" dataKey={model.name} stroke={model.color} strokeWidth={model.isDashed ? 1.5 : 2} strokeDasharray={model.isDashed ? '5 5' : '0'} dot={<CustomDot data={chartData} />} activeDot={{
           r: 4
         }} animationDuration={300} />)}

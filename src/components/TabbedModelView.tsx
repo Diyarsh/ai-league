@@ -209,19 +209,19 @@ const TabbedModelView = () => {
               <div className="space-y-3">
                 {[{
                   name: "Claude 4.5 Sonnet",
-                  color: "#9D7BE8"
+                  color: "#FF6B35"
                 }, {
                   name: "DeepSeek V3.1 Chat",
-                  color: "#4C9AFF"
+                  color: "#4A90E2"
                 }, {
                   name: "Gemini 2.5 Pro",
-                  color: "#FFA500"
+                  color: "#4285F4"
                 }, {
                   name: "GPT 5",
-                  color: "#FF6B6B"
+                  color: "#00D9A5"
                 }, {
                   name: "Grok 4",
-                  color: "#000000"
+                  color: "#FFFFFF"
                 }, {
                   name: "Qwen 3 Max",
                   color: "#00FF94"
